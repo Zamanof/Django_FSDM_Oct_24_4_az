@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+    List of notes
+{% endblock %}
+{% block content %}
+	<h1>Notes List</h1>
+<ul>
+    {% for note in notes %}
+        <li>
+        <a href="{% url 'note_detail' note.id %}">
+            {{ note.title }}
+            category:
+            {% if note.category == "backend" %}
+                <span style="color: red">
+            {% elif note.category == "database" %}
+                <span style="color: green">
+            {% else %}
+                <span style="color: black">
+            {% endif %}
+            {{ note.category|upper }}
+            </span>
+        </li>
+        </a>
+
+        {% empty %}
+        <li>Empty notes list</li>
+    {% endfor %}
+</ul>
+
+{% with total=notes|length %}
+    <p>Notes count: {{ total }}</p>
+{% endwith %}
+{% endblock %}
+
+
+{% comment %}
+Template tags:
+    {% for %}
+    {% if %} / {% elif %} / {% else %}
+    {% empty %}
+    {% url %}
+    {% include %}
+    {% with %}
+{% endcomment %}

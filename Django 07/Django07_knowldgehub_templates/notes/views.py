@@ -1,5 +1,5 @@
 from django.middleware.csrf import get_token
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.utils.html import escape
 from django.urls import reverse
 from django.http import HttpResponse, HttpRequest
@@ -244,180 +244,27 @@ def _csrf_field(request:HttpRequest)-> str:
     return f"<input type='hidden' name='csrfmiddlewaretoken' value='{escape(token)}'/input>"
 
 def home(request: HttpRequest) -> HttpResponse:
-    body= f"""
-    <h1> Knowledge Hub </h1>
-    <p>Welcome!!!</p>
-    <p class='muted'>
-        <a href="{escape(reverse('notes_list'))}">Notes list</a>
-    </p>
-    """
-    return HttpResponse(html_shell("Knowledge Hub - home", body))
+    return render(request, 'notes/home.html', {
+        "page_title": "Knowledge Hub",
+        'welcome_text': "Welcome to Knowledge Hub",
+    }
+                  )
 
 def about(request: HttpRequest) -> HttpResponse:
-    body = """
-        <h1>About Knowledge Hub Project</h1>
-
-        <p>
-            Knowledge Hub is a simple Django web application designed
-            to store and organize useful notes and learning materials.
-        </p>
-
-        <p>
-            Users can browse notes, view detailed information,
-            and explore content by tags and categories.
-        </p>
-
-        <p class='muted'>
-            This project was created to practice Django views,
-            URL routing, HTTP requests and responses.
-        </p>
-    """
-    return HttpResponse(html_shell("Knowledge About - home", body))
+    context = {
+        "project_name": "Knowledge Hub Super Pupper",
+        "author": "Nadir Zamanov",
+    }
+    return render(request, 'notes/about.html', context)
 
 def notes_list(request: HttpRequest) -> HttpResponse:
-    raw_tag = request.GET.get("tag")
-    raw_category = request.GET.get("category")
-
     notes = data.list_notes()
-
-    if raw_tag:
-        tag_filter = raw_tag.strip().lower()
-        notes = [
-            n for n in notes
-            if n["tag"].lower() == tag_filter
-        ]
-
-    if raw_category:
-        category_filter = raw_category.strip().lower()
-        notes = [
-            n for n in notes
-            if n["category"].lower() == category_filter
-        ]
-
-    items: list[str] = []
-
-    for note in notes:
-        url = reverse(
-            "note_detail",
-            kwargs={"note_id": note["id"]}
-        )
-
-        items.append(
-            f"""
-            <li>
-                <a href="{escape(url)}">
-                    {escape(note["title"])}
-                </a>
-
-                <span class="muted">
-                    (
-                    tag: {escape(note["tag"])},
-                    category: {escape(note["category"])}
-                    )
-                </span>
-            </li>
-            """
-        )
-
-    reset_url = escape(reverse("notes_list"))
-    create_url = escape(reverse("note_create"))
-
-    tag_checked = "checked" if raw_tag == "python" else ""
-    category_checked = "checked" if raw_category == "backend" else ""
-
-    filters = f"""
-        <form method="GET" action="{reset_url}">
-
-            <h3>Filters</h3>
-
-            <label>
-                <input
-                    type="checkbox"
-                    name="tag"
-                    value="python"
-                    {tag_checked}
-                >
-                Tag: Python
-            </label>
-
-            <label>
-                <input
-                    type="checkbox"
-                    name="category"
-                    value="backend"
-                    {category_checked}
-                >
-                Category: Backend
-            </label>
-
-            <p>
-                <button type="submit">
-                    Filter
-                </button>
-
-                <a href="{reset_url}">
-                    <button type="button">
-                        Reset
-                    </button>
-                </a>
-            </p>
-
-        </form>
-    """
-
-    body = f"""
-        <h1>Notes</h1>
-
-        {filters}
-
-        <p>
-            <a href="{create_url}">
-                Create Note
-            </a>
-        </p>
-
-        <ul class="notes">
-            {"".join(items) if items else "<li>Notes not found</li>"}
-        </ul>
-    """
-
-    return HttpResponse(
-        html_shell("Notes - list", body)
-    )
+    return render(request, 'notes/notes_list.html', {"notes": notes})
 
 
 def note_detail(request: HttpRequest, note_id:int) -> HttpResponse:
     note = data.get_note(note_id)
-    if note is None:
-        return HttpResponse(html_shell("404 - not found", f"""
-        <h1>Notes not found</h1>
-        <p class="muted">id = {escape(str(note_id))}</p>
-        <p class="muted">
-            <a href="{escape(reverse("notes_list"))}">Return to notes list</a>
-            </p>
-        """), status=404)
-
-
-    edit_url = escape(reverse("note_edit", kwargs={"note_id": note_id}))
-    delete_url = escape(reverse("note_delete", kwargs={"note_id": note_id}))
-    list_url = escape(reverse("notes_list"))
-    body = (
-        f"""
-            <h1>{escape(note['title'])}</h1>
-            <p class="muted">id: {note["id"]} tag: {escape(note["tag"])}  category: {escape(note["category"])}</p>
-            <p>{escape(note['body'])}</p>
-            <p>
-                <a href="{edit_url}">Edit</a>
-            </p>
-            <p>
-                <a href="{delete_url}">Delete</a>
-            </p>
-            <p>
-                <a href="{list_url}">Return to Notes List</a>
-            </p>
-        """
-    )
-    return HttpResponse(html_shell(note["title"], body))
+    return render(request, 'notes/note_detail.html', {"note": note})
 
 
 def note_create(request: HttpRequest) -> HttpResponse:
