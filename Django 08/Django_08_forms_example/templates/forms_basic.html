@@ -1,0 +1,24 @@
+<form action="/contact" method="post">
+    <p>
+        <label for="id_name">Name</label>
+        <br/>
+        <input id="id_name" type="text" name="name" required>
+    </p>
+    <p>
+        <label for="id_message">Message</label>
+        <br/>
+        <textarea id="id_message" name="message" rows="4"></textarea>
+    </p>
+
+    <p>
+        <label for="id_topic">Topic</label>
+        <br/>
+        <select id="id_topic" name="topic">
+            <option value="study">Study</option>
+            <option value="project">Project</option>
+        </select>
+    </p>
+    <p>
+        <button type="submit">Send</button>
+    </p>
+</form>
