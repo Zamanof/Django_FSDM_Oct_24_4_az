@@ -48,11 +48,18 @@ def note_edit(request: HttpRequest, note_id: int) :
 
     if request.method == "POST":
         title = request.POST.get("title", "")
-        note_body = request.POST.get("body", "")
-        tag = request.POST.get("tag", "")
-        category = request.POST.get("category", "")
+        content = request.POST.get("content", "")
+        tags = request.POST.get("tags", "").split()
+        category= request.POST.get("category", "")
+        data.update_note(
+            note_id,
+            title=title,
+            content=content,
+            tags=tags,
+            category=category)
+        return redirect('notes_list')
 
-    return render(request, 'notes/note_edit.html')
+    return render(request, 'notes/note_edit.html', {"note": note, "note_id": note_id})
 
 
 def note_delete(request: HttpRequest, note_id: int) :
@@ -63,7 +70,7 @@ def note_delete(request: HttpRequest, note_id: int) :
         data.delete_note(note_id)
         return redirect("notes_list")
 
-    return render(request, 'notes/note_delete.html')
+    return render(request, 'notes/note_delete.html', {"note": note})
 
 
 def contact_form(request: HttpRequest):

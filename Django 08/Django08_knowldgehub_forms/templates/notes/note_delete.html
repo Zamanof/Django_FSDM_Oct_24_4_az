@@ -5,8 +5,8 @@
 	<h1>Delete Note?</h1>
   <p></p>
   <form method="post">
-
+    {% csrf_token %}
     <button type="submit">Yes, delete</button>
-    <a class="muted" href="#">Cancel</a>
+    <a class="muted" href="{% url 'notes_list' %}">Cancel</a>
   </form>
 {% endblock %}

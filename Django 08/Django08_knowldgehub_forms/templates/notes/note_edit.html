@@ -1,33 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<form method="post" >
+	<form method="post" action="{% url 'note_edit' note_id %}">
+    {% csrf_token %}
 
     <label>
         Title
         <br />
-        <input type="text" name="title" value="" required />
+        <input type="text" name="title" value="{{ note.title }}" required />
     </label>
 
     <label>
         Text
         <br />
-        <textarea name="body" rows="6"></textarea>
+        <textarea name="content" rows="6">{{ note.content }}</textarea>
     </label>
 
-        <label>Tag
+        <label>Tags
             <br />
-            <input type="text" name="tag" value="" />
+            <input type="text" name="tags" value="{{ note.tags|join:" " }}" />
         </label>
     <label>
         Category
         <br />
-        <input type="text" name="category" value="" />
+        <input type="text" name="category" value="{{ note.category }}" />
     </label>
 
     <p style="margin-top:1rem;">
       <button type="submit">Save</button>
-      <a class="muted" href="#">Cancel</a>
+      <a class="muted" href="{% url 'notes_list' %}">Cancel</a>
     </p>
   </form>
 {% endblock %}

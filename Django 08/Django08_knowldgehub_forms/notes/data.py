@@ -118,18 +118,18 @@ def update_note(
         note_id:int,
         *,
         title:str,
-        body:str,
-        tag:str,
+        content:str,
+        tags:list['str'],
         category:str,
 )-> dict[str, Any] | None:
     for note in _NOTES:
         if note["id"] == note_id:
             note["title"] = title.strip()
-            note["body"] = body.strip()
+            note["content"] = content.strip()
             note["category"] = category.strip()
-            note["tag"] = tag.strip()
+            note["tags"] = tags
             return deepcopy(note)
-        return None
+    return None
 
 
 def delete_note(note_id:int)-> bool:

@@ -29,7 +29,10 @@
             <strong>Tags:</strong>
             {{ note.tags|join:", " }}
         </p>
-
+        <p>
+            <a href="{% url 'note_edit' note.id %}">Edit</a>
+            <a href="{% url 'note_delete' note.id %}">Delete</a>
+        </p>
         <p class="muted"><a href="{% url 'notes_list' %}">Return to note list</a></p>
 
     {% else %}
