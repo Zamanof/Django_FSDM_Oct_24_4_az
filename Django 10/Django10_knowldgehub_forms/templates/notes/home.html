@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="hero-card">
+        <span class="eyebrow">Personal knowledge space</span>
+        <h1>{{ page_title }}</h1>
+        <p class="lead">{{ welcome_text }}</p>
+        <p class="muted hero-actions">
+            <a class="btn-link" href="{% url 'notes_list' %}">Explore notes →</a>
+        </p>
+    </section>
+{% endblock %}

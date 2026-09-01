@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ note.title|title }}
+{% endblock %}
+
+{% block content %}
+    {% if note %}
+        <article class="note-detail-card">
+        <span class="eyebrow">Note details</span>
+        <h1>{{ note.title|title }}</h1>
+        <p>
+            <strong>Category:</strong>
+            {{ note.category }}
+        </p>
+
+        <p>
+            <strong>Date:</strong>
+            {#        {{ note.created_at|date:"d/m/Y" }}#}
+            {#        {{ note.created_at|date:"d.m.Y H:i" }}#}
+            {#        {{ note.created_at|date:"Y-m-d" }}#}
+            {{ note.created_at|date:"j F Y" }}
+        </p>
+
+        <p>
+
+            {{ note.content|truncatechars:200 }}
+        </p>
+
+        <p>
+            <strong>Tags:</strong>
+            {{ note.tags|join:", " }}
+        </p>
+        <p class="actions">
+            <a href="{% url 'note_edit' note.id %}">Edit</a>
+            <a class="danger-link" href="{% url 'note_delete' note.id %}">Delete</a>
+        </p>
+        <p class="muted back-link"><a href="{% url 'notes_list' %}">← Return to note list</a></p>
+        </article>
+
+    {% else %}
+        <p>Note not found</p>
+    {% endif %}
+{% endblock %}
+
+
+{% comment %}
+Template filter:
+    upper
+    lower
+    title
+    length
+    default
+    date:"format"
+          Simvol      Mənası               Nəticə
+            d	    Gün, 2 rəqəm	        25
+            j	    Gün	                    25
+            m	    Ay, 2 rəqəm	            08
+            F	    Ayın tam adı	        August
+            M	    Ayın qısa adı	        Aug
+            Y	    4 rəqəmli il	        2026
+            y	    2 rəqəmli il	        26
+            H	    Saat, 24 saatlıq	    12
+            i	    Dəqiqə	                01
+            s	    Saniyə	                35
+    truncatechars
+    safe
+    first
+    last
+    join
+{% endcomment %}
