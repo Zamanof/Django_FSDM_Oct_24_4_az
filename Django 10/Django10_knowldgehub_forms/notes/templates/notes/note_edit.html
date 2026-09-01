@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<form method="post" class="note-form" action="{% url 'notes:note_edit' note_id %}">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <p class="form-actions">
+      <button type="submit">Save</button>
+      <a class="muted" href="{% url 'notes:notes_list' %}">Cancel</a>
+    </p>
+  </form>
+{% endblock %}

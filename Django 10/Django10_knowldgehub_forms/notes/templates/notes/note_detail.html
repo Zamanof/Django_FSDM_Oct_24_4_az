@@ -29,13 +29,13 @@
 
         <p>
             <strong>Tags:</strong>
-            {{ note.tags|join:", " }}
+            {{ note.tags }}
         </p>
         <p class="actions">
-            <a href="{% url 'note_edit' note.id %}">Edit</a>
-            <a class="danger-link" href="{% url 'note_delete' note.id %}">Delete</a>
+            <a href="{% url 'notes:note_edit' note.id %}">Edit</a>
+            <a class="danger-link" href="{% url 'notes:note_delete' note.id %}">Delete</a>
         </p>
-        <p class="muted back-link"><a href="{% url 'notes_list' %}">← Return to note list</a></p>
+        <p class="muted back-link"><a href="{% url 'notes:notes_list' %}">← Return to note list</a></p>
         </article>
 
     {% else %}

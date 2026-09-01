@@ -11,6 +11,7 @@ urlpatterns = [
     path("about/", notes_views.AboutPageView.as_view(), name="about"),
 # / /notes/ -> routes from notes/urls.py
     path("notes/", include("notes.urls")),
+    path("accounts/", include("accounts.urls")),
     path("contact/", notes_views.contact_form, name="contact"),
 
 ]

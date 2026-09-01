@@ -100,15 +100,16 @@ def get_note(note_id:int)-> dict[str, Any] | None:
     return None
 
 
-def create_note(*, title:str, body:str, tag:str, category:str)-> dict[str, Any]:
+def create_note(*, title:str, content:str, tags:list[str], category:str)-> dict[str, Any]:
     global _next_id
     note = {
         "id": _next_id,
         "title": title.strip(),
-        "body": body.strip(),
-        "tag": tag.strip(),
+        "content": content.strip(),
+        "tags": " ".join(tags),
         "category": category.strip()
     }
+    print(note['tags'])
     _NOTES.append(note)
     _next_id += 1
     return deepcopy(note)
@@ -127,7 +128,7 @@ def update_note(
             note["title"] = title.strip()
             note["content"] = content.strip()
             note["category"] = category.strip()
-            note["tags"] = tags
+            note["tags"] = ' '.join(tags)
             return deepcopy(note)
     return None
 
