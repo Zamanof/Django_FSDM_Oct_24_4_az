@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Register Success-Knowledge Hub
+{% endblock %}
+
+{% block content %}
+<h1>Register Success</h1>
+    <p class="lead">User {{ username }} registered</p>
+    <p>
+        <a href="{% url 'accounts:login' %}" class="btn-link">Get to login page</a>
+
+        <a href="{% url 'home' %}" class="btn-link">Return to home page</a>
+    </p>
+{% endblock %}

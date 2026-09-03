@@ -16,3 +16,14 @@ class RegisterForm(forms.Form):
         return cleaned_data
 
 
+class LoginForm(forms.Form):
+    username_or_email = forms.CharField(
+        label="Username or email",
+        max_length=100,
+        min_length=3,
+    widget=forms.TextInput(attrs={"placeholder": "Username or email"})
+    )
+    password = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"})
+    )

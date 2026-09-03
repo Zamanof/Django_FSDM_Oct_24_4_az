@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from accounts.forms import RegisterForm
+from accounts.forms import RegisterForm, LoginForm
 
 
 # Create your views here.
@@ -16,10 +16,24 @@ def register_view(request):
     return render(request, 'accounts/register.html', {'form': form})
 
 def login_view(request):
-    pass
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            request.session['active_user'] = form.cleaned_data['username_or_email']
+            return redirect('accounts:dashboard')
+    else:
+        form = LoginForm()
+    return render(request, 'accounts/login.html', {'form': form})
 
 def register_success(request):
-    pass
+    return render(
+        request,
+        'accounts/register_success.html',
+        {'username': request.session['registered_user']})
 
 def dashboard_view(request):
-    pass
+    return render(
+        request,
+        'accounts/dashboard.html',
+        {'username': request.session['active_user']}
+    )
