@@ -1,14 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <section class="card shadow-sm">
-        <div class="card-body p-4 p-md-5">
-            <span class="text-primary text-uppercase fw-bold small">Personal knowledge space</span>
-            <h1 class="mt-2">{{ page_title }}</h1>
-            <p class="lead text-secondary">{{ welcome_text }}</p>
-            <p class="text-muted mt-4">
-                <a class="btn btn-primary" href="{% url 'notes:notes_list' %}">Explore notes →</a>
-            </p>
+    <section class="reading-width">
+        <span class="page-kicker">Personal notes</span>
+        <h1 class="page-heading">{{ page_title }}</h1>
+        <p class="page-lede">
+            {{ welcome_text }}
+        </p>
+        <p class="page-lede mt-2">
+            Notes, ideas and references collected while learning software development.
+        </p>
+
+        <div class="home-shortcuts d-flex flex-wrap gap-2 mt-4">
+            <a href="{% url 'notes:notes_list' %}">Browse notes</a>
+            <a href="{% url 'notes:note_create' %}">Create a note</a>
+            <a href="{% url 'about' %}">About the project</a>
         </div>
     </section>
 {% endblock %}

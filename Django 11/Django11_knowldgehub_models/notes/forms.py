@@ -1,5 +1,8 @@
 from django import forms
 
+from notes.models import Note
+
+
 class ContactForm(forms.Form):
     name = forms.CharField(
         label="Name",
@@ -16,29 +19,50 @@ class ContactForm(forms.Form):
     )
 
 
-class NoteForm(forms.Form):
-    CATEGORY_CHOICES = [
-        ('study', 'Study'),
-        ('work', 'Work'),
-        ('personal', 'Personal'),
-    ]
-    title = forms.CharField(
-        label="Title",
-        min_length=5,
-        max_length=120,
-        widget=forms.TextInput(attrs={"placeholder": "Enter your title", "class": "form-control"}),
-    )
-    content = forms.CharField(
-        label="Content",
-        min_length=20,
-        widget=forms.Textarea(attrs={"placeholder": "Enter your content", "rows": 4, "class": "form-control"}),
-    )
-    tags = forms.CharField(
-        label="Tags",
-        widget=forms.TextInput(attrs={"placeholder": "Enter your tags", "class": "form-control"}),
-    )
-    category = forms.ChoiceField(
-        label="Category",
-        choices=CATEGORY_CHOICES,
-        widget=forms.Select(attrs={"class": "form-select"}),
-    )
+from django import forms
+
+from .models import Note
+
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ['title', 'content', 'category', 'tags']
+
+        labels = {
+            'title': 'Title',
+            'content': 'Content',
+            'category': 'Category',
+            'tags': 'Tags',
+        }
+
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter note title',
+            }),
+
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Write your note...',
+                'rows': 5,
+            }),
+
+            'category': forms.Select(attrs={
+                'class': 'form-select',
+            }),
+
+            'tags': forms.SelectMultiple(attrs={
+                'class': 'form-select',
+            }),
+        }
+
+    def clean_title(self) -> str:
+        title = self.cleaned_data['title'].strip()
+
+        if title.lower().startswith("test"):
+            raise forms.ValidationError(
+                "Title must not start with 'test'."
+            )
+
+        return title

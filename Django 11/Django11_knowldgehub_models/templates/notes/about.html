@@ -6,25 +6,26 @@
 {% endblock %}
 
 {% block content %}
-    <section class="card shadow-sm">
-        <div class="card-body p-4 p-md-5">
-        <span class="text-primary text-uppercase fw-bold small">About the project</span>
-        <h1 class="mt-2">About {{ project_name }} Project</h1>
-        <h2 class="h5 text-secondary">Author: {{ author }}</h2>
-        <p>
-            Knowledge Hub is a simple Django web application designed
-            to store and organize useful notes and learning materials.
-        </p>
+    <section class="reading-width">
+        <span class="page-kicker">About</span>
+        <h1 class="page-heading">{{ project_name }}</h1>
+        <p class="page-lede mb-4">Author: {{ author }}</p>
 
-        <p>
-            Users can browse notes, view detailed information,
-            and explore content by tags and categories.
-        </p>
+        <div class="note-content border-0 pt-0 mt-0">
+            <p>
+                Knowledge Hub is a simple Django web application designed
+                to store and organize useful notes and learning materials.
+            </p>
 
-        <p class="text-muted">
-            This project was created to practice Django views,
-            URL routing, HTTP requests and responses.
-        </p>
+            <p>
+                Users can browse notes, view detailed information,
+                and explore content by tags and categories.
+            </p>
+
+            <p class="text-secondary mb-0">
+                This project was created to practice Django views,
+                URL routing, HTTP requests and responses.
+            </p>
         </div>
     </section>
 {% endblock %}

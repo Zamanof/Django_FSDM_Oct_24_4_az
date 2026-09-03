@@ -1,17 +1,70 @@
 {% extends 'base.html' %}
 
 {% block title %}
-
+    Create Note
 {% endblock %}
 
 {% block content %}
-	<form method="post" class="card card-body shadow-sm">
-            {% csrf_token %}
-            <span class="text-primary text-uppercase fw-bold small">Create</span>
-            <h1 class="mt-2">New note</h1>
-            {{ form.as_p }}
-             <p>
-                <button class="btn btn-primary" type="submit">Create</button>
-            </p>
-        </form>
+<div class="form-width mx-auto">
+    <span class="page-kicker">Write</span>
+    <h1 class="page-heading">New note</h1>
+    <p class="page-lede mb-4">Capture an idea, reference, or learning note.</p>
+
+    <form method="post" class="form-shell">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="{{ form.title.id_for_label }}" class="form-label">
+                {{ form.title.label }}
+            </label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.title.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.content.id_for_label }}" class="form-label">
+                {{ form.content.label }}
+            </label>
+            {{ form.content }}
+            {% if form.content.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.content.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.category.id_for_label }}" class="form-label">
+                {{ form.category.label }}
+            </label>
+            {{ form.category }}
+            {% if form.category.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.category.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mb-4">
+            <label for="{{ form.tags.id_for_label }}" class="form-label">
+                {{ form.tags.label }}
+            </label>
+            {{ form.tags }}
+            {% if form.tags.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.tags.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-accent" type="submit">Create</button>
+            <a class="btn btn-quiet" href="{% url 'notes:notes_list' %}">Cancel</a>
+        </div>
+    </form>
+</div>
 {% endblock %}

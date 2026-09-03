@@ -6,42 +6,60 @@
 
 {% block content %}
     {% if note %}
-        <article class="card shadow-sm">
-        <div class="card-body p-4 p-md-5">
-        <span class="text-primary text-uppercase fw-bold small">Note details</span>
-        <h1 class="mt-2">{{ note.title|title }}</h1>
-        <p>
-            <strong>Category:</strong>
-            {{ note.category }}
-        </p>
+        <article class="reading-width">
+            <p class="mb-3">
+                <a class="link-back" href="{% url 'notes:notes_list' %}">← Back to notes</a>
+            </p>
 
-        <p>
-            <strong>Date:</strong>
-            {#        {{ note.created_at|date:"d/m/Y" }}#}
-            {#        {{ note.created_at|date:"d.m.Y H:i" }}#}
-            {#        {{ note.created_at|date:"Y-m-d" }}#}
-            {{ note.created_at|date:"j F Y" }}
-        </p>
+            <div class="note-meta mb-3">
+                {% if note.category %}
+                    <span class="category-label">{{ note.category.name }}</span>
+                    <span class="dot">·</span>
+                {% endif %}
+                {% if note.author %}
+                    <span>{{ note.author }}</span>
+                    <span class="dot">·</span>
+                {% endif %}
+                {% if note.created_at %}
+                    <span>{{ note.created_at|date:"j F Y" }}</span>
+                {% endif %}
+            </div>
 
-        <p>
+            <h1 class="page-heading">{{ note.title }}</h1>
 
-            {{ note.content|truncatechars:200 }}
-        </p>
+            {% if note.tags.all %}
+                <div class="note-tags mb-3">
+                    {% for tag in note.tags.all %}
+                        <span class="tag">#{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+            {% elif note.tags %}
+                <p class="note-preview mb-3">{{ note.tags }}</p>
+            {% endif %}
 
-        <p>
-            <strong>Tags:</strong>
-            {{ note.tags }}
-        </p>
-        <p class="d-flex align-items-center gap-2 mt-4">
-            <a class="btn btn-outline-secondary" href="{% url 'notes:note_edit' note.id %}">Edit</a>
-            <a class="btn btn-outline-danger" href="{% url 'notes:note_delete' note.id %}">Delete</a>
-        </p>
-        <p class="text-muted mt-4"><a href="{% url 'notes:notes_list' %}">← Return to note list</a></p>
-        </div>
+            <div class="note-content border-top pt-4">
+                {{ note.content }}
+            </div>
+
+            {% if note.updated_at %}
+                <p class="text-secondary small mt-4 mb-0">
+                    Updated {{ note.updated_at|date:"j F Y" }}
+                </p>
+            {% endif %}
+
+            <div class="d-flex flex-wrap gap-2 mt-4 pt-3 border-top">
+                <a class="btn btn-sm btn-quiet" href="{% url 'notes:note_edit' note.id %}">Edit</a>
+                <a class="btn btn-sm btn-outline-danger" href="{% url 'notes:note_delete' note.id %}">Delete</a>
+            </div>
         </article>
 
     {% else %}
-        <p>Note not found</p>
+        <div class="empty-state reading-width">
+            <p class="fw-semibold mb-1">Note not found</p>
+            <p class="text-secondary small mb-0">
+                <a href="{% url 'notes:notes_list' %}">Return to the notes list</a>
+            </p>
+        </div>
     {% endif %}
 {% endblock %}
 

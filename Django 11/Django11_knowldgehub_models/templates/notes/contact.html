@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
 
-{% block content %}
-	<form method="post" class="card card-body shadow-sm">
-        {% csrf_token %}
+{% block title %}
+    Contact - Knowledge Hub
+{% endblock %}
 
+{% block content %}
+<div class="form-width mx-auto">
+    <span class="page-kicker">Contact</span>
+    <h1 class="page-heading">Get in touch</h1>
+    <p class="page-lede mb-4">Send a short message using the form below.</p>
+
+    <form method="post" class="form-shell">
+        {% csrf_token %}
         {{ form.as_p }}
     </form>
+</div>
 {% endblock %}

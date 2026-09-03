@@ -2,14 +2,24 @@
 {% load static %}
 
 {% block title %}
-    Register - Knowledge Hub
+    Sign In - Knowledge Hub
 {% endblock %}
 
 {% block content %}
-<h1>Sign In</h1>
-<form method="post" class="card card-body shadow-sm" autocomplete="off">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-primary" type="submit">Sign In</button>
-</form>
+<div class="narrow-width mx-auto">
+    <span class="page-kicker">Account</span>
+    <h1 class="page-heading">Sign in</h1>
+    <p class="page-lede mb-4">Continue to your notes workspace.</p>
+
+    <form method="post" class="form-shell" autocomplete="off">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-accent w-100 mt-2" type="submit">Sign In</button>
+    </form>
+
+    <p class="text-secondary small mt-3 mb-0">
+        No account yet?
+        <a href="{% url 'accounts:register' %}">Register</a>
+    </p>
+</div>
 {% endblock %}

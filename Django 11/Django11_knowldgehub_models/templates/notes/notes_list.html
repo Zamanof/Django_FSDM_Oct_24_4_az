@@ -5,39 +5,64 @@
 {% endblock %}
 
 {% block content %}
-    <div class="d-flex justify-content-between align-items-end gap-3 mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
         <div>
-            <span class="text-primary text-uppercase fw-bold small">Knowledge library</span>
-            <h1 class="mt-2 mb-0">Notes List</h1>
+            <span class="page-kicker">Library</span>
+            <h1 class="page-heading mb-0">Notes</h1>
         </div>
+        <a class="btn btn-sm btn-accent" href="{% url 'notes:note_create' %}">New note</a>
     </div>
 
-    <ul class="list-group">
+    <ul class="note-list">
         {% for note in notes %}
-            <li class="list-group-item position-relative">
-                <a href="{% url 'notes:note_detail' note.id %}" class="d-flex justify-content-between align-items-center gap-3 text-decoration-none text-dark stretched-link">
-                    <span class="fw-semibold">{{ note.title }}</span>
-                    <span class="text-muted small">
-                        category:
-                        {% if note.category == "backend" %}
-                            <span class="badge text-bg-danger">
-                        {% elif note.category == "database" %}
-                            <span class="badge text-bg-success">
-                        {% else %}
-                            <span class="badge text-bg-secondary">
-                        {% endif %}
-                        {{ note.category|upper }}
-                        </span>
-                    </span>
+            <li class="note-item">
+                <div class="note-meta">
+                    {% if note.category %}
+                        <span class="category-label">{{ note.category.name }}</span>
+                        <span class="dot">·</span>
+                    {% endif %}
+                    {% if note.created_at %}
+                        <span>{{ note.created_at|date:"j M Y" }}</span>
+                    {% endif %}
+                    {% if note.author %}
+                        <span class="dot">·</span>
+                        <span>{{ note.author }}</span>
+                    {% endif %}
+                </div>
+
+                <a class="note-title" href="{% url 'notes:note_detail' note.id %}">
+                    {{ note.title }}
                 </a>
+
+                {% if note.content %}
+                    <p class="note-preview">{{ note.content|truncatechars:160 }}</p>
+                {% endif %}
+
+                {% if note.tags.all %}
+                    <div class="note-tags">
+                        {% for tag in note.tags.all %}
+                            <span class="tag">#{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </li>
         {% empty %}
-            <li class="list-group-item text-center text-muted py-4">Empty notes list</li>
+            <li class="pt-3">
+                <div class="empty-state">
+                    <p class="fw-semibold mb-1">No notes yet.</p>
+                    <p class="text-secondary small mb-3">
+                        Create the first note to start building your knowledge base.
+                    </p>
+                    <a class="btn btn-sm btn-accent" href="{% url 'notes:note_create' %}">Create note</a>
+                </div>
+            </li>
         {% endfor %}
     </ul>
 
     {% with total=notes|length %}
-        <p class="text-muted text-end mt-3">Notes count: <strong>{{ total }}</strong></p>
+        {% if total %}
+            <p class="text-secondary small text-end mt-3 mb-0">{{ total }} note{{ total|pluralize }}</p>
+        {% endif %}
     {% endwith %}
 {% endblock %}
 

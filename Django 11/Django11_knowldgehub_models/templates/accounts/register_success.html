@@ -2,15 +2,18 @@
 {% load static %}
 
 {% block title %}
-    Register Success-Knowledge Hub
+    Register Success - Knowledge Hub
 {% endblock %}
 
 {% block content %}
-<h1>Register Success</h1>
-    <p class="lead">User {{ username }} registered</p>
-    <p>
-        <a href="{% url 'accounts:login' %}" class="btn btn-primary">Get to login page</a>
+<div class="narrow-width mx-auto">
+    <span class="page-kicker">Account</span>
+    <h1 class="page-heading">Registration complete</h1>
+    <p class="page-lede mb-4">User {{ username }} registered successfully.</p>
 
-        <a href="{% url 'home' %}" class="btn btn-primary">Return to home page</a>
-    </p>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{% url 'accounts:login' %}" class="btn btn-accent">Go to login</a>
+        <a href="{% url 'home' %}" class="btn btn-quiet">Return home</a>
+    </div>
+</div>
 {% endblock %}

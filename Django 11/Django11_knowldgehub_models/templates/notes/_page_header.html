@@ -1,17 +1,31 @@
+{% load static %}
 <header>
-    <nav class="navbar navbar-expand-md bg-white border-bottom sticky-top mb-4">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'home' %}">Knowledge Hub</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-md site-nav sticky-top">
+        <div class="site-shell navbar-inner">
+            <a class="navbar-brand brand-lockup mb-0" href="{% url 'home' %}">
+                <img
+                    src="{% static 'images/logo.png' %}?v=5"
+                    alt=""
+                    class="brand-logo"
+                    width="66"
+                    height="54"
+                >
+                <span class="brand-divider" aria-hidden="true"></span>
+                <span class="brand-text">
+                    <span class="brand-name">Knowledge Hub</span>
+                    <span class="brand-tagline d-none d-sm-block">Notes • Ideas • Development</span>
+                </span>
+            </a>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    <a class="nav-link" href="{% url 'notes:notes_list' %}">Notes</a>
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
-                    <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
-                    <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
+                <div class="navbar-nav ms-auto gap-md-1 py-2 py-md-0">
+                    <a class="nav-link{% if request.resolver_match.url_name == 'home' %} active{% endif %}" href="{% url 'home' %}">Home</a>
+                    <a class="nav-link{% if request.resolver_match.namespace == 'notes' %} active{% endif %}" href="{% url 'notes:notes_list' %}">Notes</a>
+                    <a class="nav-link{% if request.resolver_match.url_name == 'about' %} active{% endif %}" href="{% url 'about' %}">About</a>
+                    <a class="nav-link{% if request.resolver_match.url_name == 'login' %} active{% endif %}" href="{% url 'accounts:login' %}">Login</a>
+                    <a class="nav-link{% if request.resolver_match.url_name == 'register' %} active{% endif %}" href="{% url 'accounts:register' %}">Register</a>
                 </div>
             </div>
         </div>
