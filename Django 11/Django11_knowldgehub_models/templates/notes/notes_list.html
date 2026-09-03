@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}
+    List of notes
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-end gap-3 mb-4">
+        <div>
+            <span class="text-primary text-uppercase fw-bold small">Knowledge library</span>
+            <h1 class="mt-2 mb-0">Notes List</h1>
+        </div>
+    </div>
+
+    <ul class="list-group">
+        {% for note in notes %}
+            <li class="list-group-item position-relative">
+                <a href="{% url 'notes:note_detail' note.id %}" class="d-flex justify-content-between align-items-center gap-3 text-decoration-none text-dark stretched-link">
+                    <span class="fw-semibold">{{ note.title }}</span>
+                    <span class="text-muted small">
+                        category:
+                        {% if note.category == "backend" %}
+                            <span class="badge text-bg-danger">
+                        {% elif note.category == "database" %}
+                            <span class="badge text-bg-success">
+                        {% else %}
+                            <span class="badge text-bg-secondary">
+                        {% endif %}
+                        {{ note.category|upper }}
+                        </span>
+                    </span>
+                </a>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center text-muted py-4">Empty notes list</li>
+        {% endfor %}
+    </ul>
+
+    {% with total=notes|length %}
+        <p class="text-muted text-end mt-3">Notes count: <strong>{{ total }}</strong></p>
+    {% endwith %}
+{% endblock %}
+
+
+{% comment %}
+Template tags:
+    {% for %} {% endfor %}
+    {% if %} / {% elif %} / {% else %} {% endif %}
+    {% empty %}
+    {% url %}
+    {% include %}
+    {% with %} {% endwith %}
+{% endcomment %}

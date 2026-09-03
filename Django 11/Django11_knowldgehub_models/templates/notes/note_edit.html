@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<form method="post" class="card card-body shadow-sm" action="{% url 'notes:note_edit' note_id %}">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <p class="d-flex align-items-center gap-2 mt-3">
+      <button class="btn btn-primary" type="submit">Save</button>
+      <a class="btn btn-outline-secondary" href="{% url 'notes:notes_list' %}">Cancel</a>
+    </p>
+  </form>
+{% endblock %}

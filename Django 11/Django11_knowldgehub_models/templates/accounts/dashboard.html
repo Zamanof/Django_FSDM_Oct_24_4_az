@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    User Dashboard-Knowledge Hub
+{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+    <h1 class="lead">User: {{ username }}</h1>
+    <ul class="list-group mb-4">
+    <li class="list-group-item">
+        <a href="{% url 'notes:note_create' %}">Create Note</a>
+    </li>
+        <li class="list-group-item">
+        <a href="{% url 'notes:notes_list' %}">Notes List</a></li>
+    </ul>
+     <a href="{% url 'home' %}" class="btn btn-primary">Return to home page</a>
+{% endblock %}

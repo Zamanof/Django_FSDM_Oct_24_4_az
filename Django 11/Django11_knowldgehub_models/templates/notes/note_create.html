@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+	<form method="post" class="card card-body shadow-sm">
+            {% csrf_token %}
+            <span class="text-primary text-uppercase fw-bold small">Create</span>
+            <h1 class="mt-2">New note</h1>
+            {{ form.as_p }}
+             <p>
+                <button class="btn btn-primary" type="submit">Create</button>
+            </p>
+        </form>
+{% endblock %}

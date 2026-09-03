@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+	<span class="text-primary text-uppercase fw-bold small">Confirmation</span>
+    <h1 class="mt-2">Delete Note?</h1>
+  <p></p>
+  <form method="post" class="card card-body shadow-sm border-danger">
+    {% csrf_token %}
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-danger" type="submit">Yes, delete</button>
+      <a class="btn btn-outline-secondary" href="{% url 'notes:notes_list' %}">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

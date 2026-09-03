@@ -1,0 +1,19 @@
+<header>
+    <nav class="navbar navbar-expand-md bg-white border-bottom sticky-top mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'home' %}">Knowledge Hub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    <a class="nav-link" href="{% url 'notes:notes_list' %}">Notes</a>
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                    <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+                    <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
