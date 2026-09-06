@@ -1,10 +1,10 @@
-# from django.contrib import admin
+from django.contrib import admin
 from django.urls import path, include
 
 from notes import views as notes_views
 
 urlpatterns = [
-    #    path('admin/', admin.site.urls),
+       path('admin/', admin.site.urls),
     # / -> home
     path("", notes_views.home, name="home"),
 
