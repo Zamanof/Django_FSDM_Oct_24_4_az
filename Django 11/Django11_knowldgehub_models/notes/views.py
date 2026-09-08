@@ -25,8 +25,14 @@ class AboutPageView(TemplateView):
         context['description'] = "Knowledge Hub Super Pupper"
         return context
 
+@login_required
 def notes_list(request: HttpRequest) :
-    notes = Note.objects.select_related("author", 'category').prefetch_related('tags').all()
+
+    if request.user.is_superuser:
+        notes = Note.objects.all()
+    else:
+        notes = Note.objects.filter(author=request.user).order_by('-created_at')
+
     return render(request, 'notes/notes_list.html', {"notes": notes})
 
 @login_required
@@ -35,6 +41,9 @@ def note_detail(request: HttpRequest, note_id:int) :
         Note.objects.select_related("author", 'category').prefetch_related('tags'),
         pk = note_id
     )
+    if note.author != request.user and not request.user.is_superuser:
+        return HttpResponseForbidden("You can only see this note's author's details")
+
     return render(request, 'notes/note_detail.html', {"note": note})
 
 @login_required
@@ -56,7 +65,7 @@ def note_create(request: HttpRequest) :
 @login_required
 def note_edit(request: HttpRequest, note_id: int) :
     note = get_object_or_404(Note, pk=note_id)
-    if note.author_id != request.user.id :
+    if note.author != request.user and not request.user.is_superuser:
         return HttpResponseForbidden('You are not authorized to edit this note')
 
     if request.method == "POST" :
@@ -72,7 +81,7 @@ def note_edit(request: HttpRequest, note_id: int) :
 @login_required
 def note_delete(request: HttpRequest, note_id: int) :
    note = get_object_or_404(Note, pk=note_id)
-   if note.author_id != request.user.id :
+   if note.author_id != request.user.id and not request.user.is_superuser:
        return HttpResponseForbidden('You are not authorized to delete this note')
    if request.method == "POST" :
        note.delete()
