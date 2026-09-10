@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Edit note
+{% endblock %}
+
+{% block content %}
+<div class="form-width mx-auto">
+    <span class="page-kicker">Edit</span>
+    <h1 class="page-heading">Update note</h1>
+    <p class="page-lede mb-4">Adjust the content, category, or tags.</p>
+
+    <form method="post" class="form-shell" action="{% url 'notes:note_edit' note.pk %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="d-flex flex-wrap gap-2 mt-3">
+            <button class="btn btn-accent" type="submit">Save</button>
+            <a class="btn btn-quiet" href="{% url 'notes:notes_list' %}">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

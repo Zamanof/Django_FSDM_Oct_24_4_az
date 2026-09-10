@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Delete note
+{% endblock %}
+
+{% block content %}
+<div class="form-width mx-auto">
+    <span class="page-kicker">Confirmation</span>
+    <h1 class="page-heading">Delete note?</h1>
+    <p class="page-lede mb-4">
+        {% if note %}
+            You are about to delete “{{ note.title }}”. This action cannot be undone.
+        {% else %}
+            This action cannot be undone.
+        {% endif %}
+    </p>
+
+    <form method="post" class="form-shell">
+        {% csrf_token %}
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-quiet" href="{% url 'notes:notes_list' %}">Cancel</a>
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

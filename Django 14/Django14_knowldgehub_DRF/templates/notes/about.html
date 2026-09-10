@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{#{% include 'notes/_page_header.html' %}#}
+{% block title %}
+    About - Knowledge Hub
+{% endblock %}
+
+{% block content %}
+    <section class="reading-width">
+        <span class="page-kicker">About</span>
+        <h1 class="page-heading">{{ project_name }}</h1>
+        <p class="page-lede mb-4">Author: {{ author }}</p>
+
+        <div class="note-content border-0 pt-0 mt-0">
+            <p>
+                Knowledge Hub is a simple Django web application designed
+                to store and organize useful notes and learning materials.
+            </p>
+
+            <p>
+                Users can browse notes, view detailed information,
+                and explore content by tags and categories.
+            </p>
+
+            <p class="text-secondary mb-0">
+                This project was created to practice Django views,
+                URL routing, HTTP requests and responses.
+            </p>
+        </div>
+    </section>
+{% endblock %}

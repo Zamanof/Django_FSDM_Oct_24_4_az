@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="reading-width">
+        <span class="page-kicker">Personal notes</span>
+        <h1 class="page-heading">{{ page_title }}</h1>
+        <p class="page-lede">
+            {{ welcome_text }}
+        </p>
+        <p class="page-lede mt-2">
+            Notes, ideas and references collected while learning software development.
+        </p>
+
+        <div class="home-shortcuts d-flex flex-wrap gap-2 mt-4">
+            <a href="{% url 'notes:notes_list' %}">Browse notes</a>
+            <a href="{% url 'notes:note_create' %}">Create a note</a>
+            <a href="{% url 'about' %}">About the project</a>
+        </div>
+    </section>
+{% endblock %}
