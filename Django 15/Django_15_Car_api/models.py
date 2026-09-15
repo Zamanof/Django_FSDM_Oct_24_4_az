@@ -9,6 +9,7 @@ class Car(BaseModel):
     year: int
 
     @field_validator('year')
+    @classmethod
     def year_validator(cls, value):
         if not 1885<= value <= datetime.now().year:
             return ValueError("Year must be between 1885 and current year")
