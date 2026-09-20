@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ note.title|title }}
+{% endblock %}
+
+{% block content %}
+    {% if note %}
+        <article class="reading-width">
+            <p class="mb-3">
+                <a class="link-back" href="{% url 'notes:notes_list' %}">← Back to notes</a>
+            </p>
+
+            <div class="note-meta mb-3">
+                {% if note.category %}
+                    <span class="category-label">{{ note.category.name }}</span>
+                    <span class="dot">·</span>
+                {% endif %}
+                {% if note.author %}
+                    <span>{{ note.author }}</span>
+                    <span class="dot">·</span>
+                {% endif %}
+                {% if note.created_at %}
+                    <span>{{ note.created_at|date:"j F Y" }}</span>
+                {% endif %}
+            </div>
+
+            <h1 class="page-heading">{{ note.title }}</h1>
+
+            {% if note.tags.all %}
+                <div class="note-tags mb-3">
+                    {% for tag in note.tags.all %}
+                        <span class="tag">#{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+            {% elif note.tags %}
+                <p class="note-preview mb-3">{{ note.tags }}</p>
+            {% endif %}
+
+            <div class="note-content border-top pt-4">
+                {{ note.content }}
+            </div>
+
+            {% if note.updated_at %}
+                <p class="text-secondary small mt-4 mb-0">
+                    Updated {{ note.updated_at|date:"j F Y" }}
+                </p>
+            {% endif %}
+
+            <div class="d-flex flex-wrap gap-2 mt-4 pt-3 border-top">
+                <a class="btn btn-sm btn-quiet" href="{% url 'notes:note_edit' note.pk %}">Edit</a>
+                <a class="btn btn-sm btn-outline-danger" href="{% url 'notes:note_delete' note.id %}">Delete</a>
+            </div>
+        </article>
+
+    {% else %}
+        <div class="empty-state reading-width">
+            <p class="fw-semibold mb-1">Note not found</p>
+            <p class="text-secondary small mb-0">
+                <a href="{% url 'notes:notes_list' %}">Return to the notes list</a>
+            </p>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{% comment %}
+Template filter:
+    upper
+    lower
+    title
+    length
+    default
+    date:"format"
+          Simvol      Mənası               Nəticə
+            d	    Gün, 2 rəqəm	        25
+            j	    Gün	                    25
+            m	    Ay, 2 rəqəm	            08
+            F	    Ayın tam adı	        August
+            M	    Ayın qısa adı	        Aug
+            Y	    4 rəqəmli il	        2026
+            y	    2 rəqəmli il	        26
+            H	    Saat, 24 saatlıq	    12
+            i	    Dəqiqə	                01
+            s	    Saniyə	                35
+    truncatechars
+    safe
+    first
+    last
+    join
+{% endcomment %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Dashboard - Knowledge Hub
+{% endblock %}
+
+{% block content %}
+<div class="reading-width">
+    <span class="page-kicker">Workspace</span>
+    <h1 class="page-heading">Dashboard</h1>
+    <p class="page-lede mb-4">Signed in as {{ username }}.</p>
+
+    <ul class="note-list">
+        <li class="note-item">
+            <a class="note-title" href="{% url 'notes:note_create' %}">Create note</a>
+            <p class="note-preview mb-0">Start a new learning note.</p>
+        </li>
+        <li class="note-item">
+            <a class="note-title" href="{% url 'notes:notes_list' %}">Browse notes</a>
+            <p class="note-preview mb-0">Open the full notes library.</p>
+        </li>
+    </ul>
+
+    <p class="mt-4 mb-0">
+        <a class="link-back" href="{% url 'home' %}">← Return to home</a>
+    </p>
+</div>
+{% endblock %}
