@@ -27,7 +27,7 @@ class NoteApiOwnershipTests(APITestCase):
         self.client.force_authenticate(user=self.intruder)
 
         response = self.client.patch(
-            reverse('note-detail', args=[self.note.pk]),
+            reverse('notes-detail', args=[self.note.pk]),
             {
                 "title": "Intruder Note",
             },

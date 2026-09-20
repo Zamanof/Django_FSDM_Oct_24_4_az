@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'rest_framework',
     'drf_spectacular',
-    'api'
+    'api',
+    "django_extensions"
 ]
 
 MIDDLEWARE = [
